@@ -1,0 +1,23 @@
+name: Alerta
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v4
+
+      - name: Ejecutar hola mundo
+        run: node hola.js
+
+      - name: Enviar notificacion a ntfy
+        run: |
+          curl -H "Title: Nuevo push en main" \
+               -H "Tags: rocket" \
+               -d "${{ github.actor }} subio codigo a ${{ github.repository }}" \
+               https://ntfy.sh/devops-itla
